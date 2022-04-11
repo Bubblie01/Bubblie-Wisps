@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "bubbliewisp",
   "version": "${version}",
 
   "name": "Example Mod",
@@ -19,11 +19,14 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "io.github.bubblie01.bubbliewisps.Main"
+    ],
+    "client": [
+      "io.github.bubblie01.bubbliewisps.ClientInitializer"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "bubbliewisp.mixins.json"
   ],
 
   "depends": {

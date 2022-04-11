@@ -1,6 +1,6 @@
-package net.fabricmc.example.mixin;
+package io.github.bubblie01.bubbliewisps.mixin;
 
-import net.fabricmc.example.ExampleMod;
+import io.github.bubblie01.bubbliewisps.Main;
 import net.minecraft.client.gui.screen.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ExampleMixin {
 	@Inject(at = @At("HEAD"), method = "init()V")
 	private void init(CallbackInfo info) {
-		ExampleMod.LOGGER.info("This line is printed by an example mod mixin!");
+		Main.LOGGER.info("This line is printed by an example mod mixin!");
 	}
 }
