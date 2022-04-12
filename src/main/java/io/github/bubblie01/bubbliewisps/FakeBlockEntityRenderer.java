@@ -1,5 +1,6 @@
 package io.github.bubblie01.bubbliewisps;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
@@ -23,6 +24,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
+import static io.github.bubblie01.bubbliewisps.FakeBlockEntity.FAKE_BLOCK_RAW_ID;
+
 public class FakeBlockEntityRenderer extends EntityRenderer<FakeBlockEntity> {
     public FakeBlockEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
@@ -30,15 +33,15 @@ public class FakeBlockEntityRenderer extends EntityRenderer<FakeBlockEntity> {
 
     @Override
     public void render(FakeBlockEntity fakeBlockEntity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        BlockState blockState;
-            blockState = fakeBlockEntity.getBlockState();
-            World world = fakeBlockEntity.getWorld();
-            matrices.push();
-            BlockPos blockPos = new BlockPos(fakeBlockEntity.getX(), fakeBlockEntity.getBoundingBox().maxY, fakeBlockEntity.getZ());
-            matrices.translate(-0.5,0.0,-0.5);
-            BlockRenderManager blockRenderManager = MinecraftClient.getInstance().getBlockRenderManager();
-            blockRenderManager.getModelRenderer().render(world, blockRenderManager.getModel(blockState), blockState, blockPos, matrices, vertexConsumers.getBuffer(RenderLayers.getMovingBlockLayer(blockState)), false, new Random(), blockState.getRenderingSeed(fakeBlockEntity.getBlockPos()), OverlayTexture.DEFAULT_UV);
-            matrices.pop();
+        BlockState blockState = fakeBlockEntity.block;
+        World world = fakeBlockEntity.getWorld();
+        matrices.push();
+        BlockPos blockPos = new BlockPos(fakeBlockEntity.getX(), fakeBlockEntity.getBoundingBox().maxY, fakeBlockEntity.getZ());
+        matrices.translate(-0.5,0.0,-0.5);
+
+        BlockRenderManager blockRenderManager = MinecraftClient.getInstance().getBlockRenderManager();
+        blockRenderManager.getModelRenderer().render(world, blockRenderManager.getModel(blockState), blockState, blockPos, matrices, vertexConsumers.getBuffer(RenderLayers.getMovingBlockLayer(blockState)), false, new Random(), blockState.getRenderingSeed(fakeBlockEntity.getBlockPos()), OverlayTexture.DEFAULT_UV);
+        matrices.pop();
 
     }
 

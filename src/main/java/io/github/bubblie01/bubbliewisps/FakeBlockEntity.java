@@ -48,7 +48,7 @@ import java.util.Optional;
 
 public class FakeBlockEntity extends PathAwareEntity {
 
-    private BlockState block;
+    public volatile BlockState block;
     public VoxelShape shape;
     public static final EntityType<FakeBlockEntity> FAKE_BLOCK_ENTITY_TYPE = Registry.register(Registry.ENTITY_TYPE, new Identifier("bubbliewisp", "fake_block_entity"), FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, FakeBlockEntity::new).dimensions(EntityDimensions.changing(0.98f,0.98f)).build());
     public static final TrackedData<Integer> FAKE_BLOCK_RAW_ID = DataTracker.registerData(FakeBlockEntity.class,TrackedDataHandlerRegistry.INTEGER);
@@ -64,6 +64,8 @@ public class FakeBlockEntity extends PathAwareEntity {
 
 
     }
+
+
 
     @Override
     protected void initGoals() {
@@ -82,7 +84,7 @@ public class FakeBlockEntity extends PathAwareEntity {
                 block = ((BlockItem) stackInHand).getBlock().getDefaultState();
                 shape = block.getOutlineShape(this.world,this.getBlockPos());
             }
-            System.out.println(this.getBlockState().getBlock().getName());
+            System.out.println(block.getBlock().getName());
 
             System.out.println("X: " + this.getX() + " Y: " + this.getY() + " Z: " + this.getZ());
             System.out.println("BlockX: " + this.getBlockX() + " BlockY: " + this.getBlockY() + " BlockZ: " + this.getBlockZ());
@@ -90,13 +92,6 @@ public class FakeBlockEntity extends PathAwareEntity {
     }
 
 
-    public BlockState getBlockState() {
-        return this.block;
-    }
-
-    public void setBlockState(BlockState blockState) {
-        this.block = blockState;
-    }
 
 
 
@@ -111,7 +106,7 @@ public class FakeBlockEntity extends PathAwareEntity {
         if(block == null) {
             block = Blocks.AIR.getDefaultState();
         }
-        this.dataTracker.set(FAKE_BLOCK_RAW_ID, Block.getRawIdFromState(this.getBlockState()));
+        this.dataTracker.set(FAKE_BLOCK_RAW_ID, Block.getRawIdFromState(block));
         return super.canSpawn(world);
     }
 
